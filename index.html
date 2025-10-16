@@ -420,27 +420,27 @@
     <div class="max-w-3xl mx-auto">
       <h2 class="text-4xl font-bold text-btmBlue mb-16 text-center">Hubungi Kami</h2>
       <div class="bg-gradient-to-br from-btmBlue/5 to-btmGray/30 rounded-2xl shadow-lg p-8 md:p-12">
-        <form class="space-y-6">
+        <form id="contact-form" class="space-y-6">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
-              <input type="text" placeholder="Masukkan nama lengkap"
+              <input id="nama" name="nama" type="text" placeholder="Masukkan nama lengkap"
                 class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-btmBlue focus:border-btmBlue outline-none transition duration-300">
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-              <input type="email" placeholder="Masukkan email"
+              <label class="block text-sm font-medium text-gray-700 mb-2">Alamat</label>
+              <input id="alamat" name="alamat" type="text" placeholder="Masukkan alamat"
                 class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-btmBlue focus:border-btmBlue outline-none transition duration-300">
             </div>
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Pesan</label>
-            <textarea placeholder="Tulis pesan Anda di sini..."
+            <textarea id="pesan" name="pesan" placeholder="Tulis pesan Anda di sini..."
               class="w-full border border-gray-300 rounded-xl px-4 py-3 h-32 focus:ring-2 focus:ring-btmBlue focus:border-btmBlue outline-none transition duration-300 resize-none"></textarea>
           </div>
           <button type="submit"
             class="w-full bg-btmBlue text-white font-semibold px-8 py-4 rounded-xl hover:bg-btmYellow hover:text-btmBlue transition duration-300 shadow-lg hover:shadow-xl">
-            Kirim Pesan
+            Kirim via WhatsApp
           </button>
         </form>
       </div>
@@ -756,6 +756,25 @@
     </svg>
     <span class="ml-2" style="color:inherit;font-weight:600;">Download Brosur</span>
   </a>
+  <script>
+    // Send contact form to WhatsApp
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('contact-form');
+      if (!form) return;
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const nama = document.getElementById('nama')?.value?.trim() || '-';
+        const alamat = document.getElementById('alamat')?.value?.trim() || '-';
+        const pesan = document.getElementById('pesan')?.value?.trim() || '-';
+
+        const text = `Nama: ${nama}%0AAlamat: ${alamat}%0APesan: ${pesan}`;
+        // Replace the phone number below with the intended recipient
+        const phone = '6288971714363';
+        const url = `https://wa.me/${phone}?text=${text}`;
+        window.open(url, '_blank');
+      });
+    });
+  </script>
 </body>
 
 </html>
