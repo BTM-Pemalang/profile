@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BTM PEMALANG</title>
+  <link rel="icon" type="image/png" href="./src/images/logo-btm.png">
+  <link rel="stylesheet" href="dist/output.css">
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+</head>
+
+<body class="font-sans text-gray-800 bg-white">
+
+  <!-- Navbar dengan ScrollSpy -->
+  <nav x-data="navbarHandler()" x-init="init()"
+    class="fixed top-0 left-0 w-full z-50 bg-white shadow-lg rounded-b-2xl transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 md:px-10 py-3 flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <img src="./src/images/logo-btm.png" alt="BTM Logo" class="h-10 w-10">
+        <h1 class="text-btmBlue font-bold text-lg md:text-xl">BTM PEMALANG</h1>
+      </div>
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex space-x-6 font-medium relative">
+        <template x-for="(item, i) in menu" :key="i">
+          <a :href="item.href" class="relative py-1 transition-colors duration-300"
+            :class="active === item.href ? 'text-btmBlue font-semibold' : 'text-gray-700 hover:text-btmBlue'">
+            <span x-text="item.label"></span>
+            <span class="absolute left-0 bottom-0 h-[2px] bg-btmBlue transition-all duration-500 ease-in-out"
+              :class="active === item.href ? 'w-full' : 'w-0'"></span>
+          </a>
+        </template>
+      </div>
+
+      <!-- Mobile Button -->
+      <button id="menu-btn" @click="open = !open" class="md:hidden focus:outline-none">
+        <svg class="w-7 h-7 text-btmBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div x-show="open" x-transition class="md:hidden bg-white border-t border-btmGray">
+      <template x-for="(item, i) in menu" :key="i">
+        <a :href="item.href" class="block px-4 py-2 hover:bg-btmGray transition"
+          :class="active === item.href ? 'text-btmBlue font-semibold' : 'text-gray-700'">
+          <span x-text="item.label"></span>
+        </a>
+      </template>
+    </div>
+  </nav>
+
+  <!-- Sticky Info Bar -->
+  <div id="info-bar" class="info-bar text-center py-2 shadow-sm">
+    <p class="text-xs md:text-base text-gray-700">
+      📧 <a href="mailto:btmpemalang.pusat@yahoo.com" class="text-btmBlue font-medium">btmpemalang.pusat@yahoo.com</a> |
+      ☎️ <a href="tel:+622855750325" class="text-btmBlue font-medium">(0285) 5750325</a>
+    </p>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="pt-32 mt-6 bg-btmGray/30 section-padding overflow-hidden relative">
+    <!-- Background image (subtle, transparent) -->
+    <img src="src/images/5.png" alt="Hero background"
+      class="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none -z-10">
+    <div class="max-width flex flex-col md:flex-row items-center gap-12 relative z-10">
+      <div class="md:w-1/2 space-y-6 text-center md:text-left">
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-btmBlue leading-tight">
+          Layanan Keuangan Syariah Terpercaya di Pemalang
+        </h2>
+        <p class="text-md md:text-lg text-gray-700 leading-relaxed">
+          BTM Pemalang hadir memberikan solusi keuangan berbasis syariah untuk masyarakat yang ingin
+          tumbuh bersama dengan keberkahan.
+        </p>
+        <p class="text-gray-700 font-medium">
+          Telah terdaftar dan diawasi oleh <a href="https://www.ojk.go.id/id/Default.aspx" target="_blank"
+            class="text-red-700 hover:underline">OJK.</a>
+        </p>
+        <a href="https://wa.me/6288971714363"
+          class="inline-flex items-center justify-center gap-3 bg-btmBlue text-white font-semibold px-8 py-4 rounded-full hover:bg-btmYellow hover:text-btmBlue transition duration-300 shadow-lg hover:shadow-xl">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893c0-3.176-1.24-6.165-3.495-8.411" />
+          </svg>
+          Hubungi via WhatsApp
+        </a>
+      </div>
+      <div class="md:w-1/2">
+        <img src="src/images/hero.png" alt="Hero Section BTM"
+          class="rounded-2xl shadow-2xl w-full transform hover:scale-105 transition duration-500">
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="section-padding bg-white">
+    <div class="max-width text-center">
+      <h2 class="text-4xl font-bold text-btmBlue mb-8">Tentang Kami</h2>
+      <p class="text-lg text-gray-700 max-w-4xl mx-auto leading-relaxed">
+        Koperasi BTM Pemalang merupakan salahsatu Amal Usaha Muhammadiyah (AUM) yang bergerak di sektor ekonomi,
+        Berkomitmen untuk melayani simpanan dan pembiayaan
+        dengan prinsip syariah. Kami berfokus pada pemberdayaan ekonomi anggota dan masyarakat secara adil, transparan,
+        dan amanah.
+      </p>
+      <p>BTM Pemalang berbadan hukum koperasi dan terdaftar serta diawasi oleh OJK.</p>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="section-padding bg-btmGray">
+    <div class="max-width text-center">
+      <h2 class="text-4xl font-bold text-btmBlue mb-16">Layanan Kami</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div
+          class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-lg transition duration-300 mx-auto">
+          <span></span>
+          <img class="rounded-t-lg" src="src/images/layanan1.png" alt="Pembiayaan Produktif" />
+          </span>
+          <div class="p-5">
+            <span>
+              <h5 class="mb-2 text-2xl font-bold tracking-tight text-blue-900">Simpanan</h5>
+            </span>
+            <p class="mb-3 font-normal text-gray-700">Nikmati simpanan aman dan halal dengan bagi hasil yang kompetitif
+              sesuai prinsip syariah.</p>
+          </div>
+        </div>
+        <div
+          class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-lg transition duration-300 mx-auto">
+          <span></span>
+          <img class="rounded-t-lg" src="src/images/layanan2.png" alt="Pembiayaan Produktif" />
+          </span>
+          <div class="p-5">
+            <span>
+              <h5 class="mb-2 text-2xl font-bold tracking-tight text-blue-900">Pembiayaan Konsumtif</h5>
+            </span>
+            <p class="mb-3 font-normal text-gray-700">solusi pembiayaan halal untuk kebutuhan pribadi seperti kendaraan,
+              gadget, dan renovasi rumah dengan sistem angsuran.</p>
+          </div>
+        </div>
+        <div
+          class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-lg transition duration-300 mx-auto">
+          <span></span>
+          <img class="rounded-t-lg" src="src/images/layanan3.png" alt="Pembiayaan Produktif" />
+          </span>
+          <div class="p-5">
+            <span>
+              <h5 class="mb-2 text-2xl font-bold tracking-tight text-blue-900">Pembiayaan Produktif</h5>
+            </span>
+            <p class="mb-3 font-normal text-gray-700">Dukung usaha Anda dengan pembiayaan ringan dan
+              mudah untuk
+              pengembangan bisnis.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Simpanan Section -->
+  <section id="simpanan" class="section-padding bg-white">
+    <div class="max-width text-center">
+      <h2 class="text-4xl font-bold text-btmBlue mb-16">Produk Simpanan</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div
+          class="bg-gradient-to-br from-btmBlue/5 to-btmGray rounded-2xl shadow-lg p-8 hover:shadow-xl transition duration-300 border border-btmBlue/10 group">
+          <div
+            class="w-14 h-14 bg-btmBlue rounded-full flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition duration-300">
+            <!-- Wallet icon for Wadiah -->
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 7h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M16 11a1 1 0 100 2 1 1 0 000-2z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-btmBlue mb-3">Tabungan Wadiah</h3>
+          <p class="text-gray-700 leading-relaxed">Simpanan titipan yang aman dan tidak dikenakan biaya administrasi
+            bulanan.</p>
+        </div>
+        <div
+          class="bg-gradient-to-br from-btmBlue/5 to-btmGray rounded-2xl shadow-lg p-8 hover:shadow-xl transition duration-300 border border-btmBlue/10 group">
+          <div
+            class="w-14 h-14 bg-btmBlue rounded-full flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition duration-300">
+            <!-- Chart / growth icon for Mudharabah -->
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3v18h18" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 14l4-6 4 4 4-10" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-btmBlue mb-3">Tabungan Mudharabah</h3>
+          <p class="text-gray-700 leading-relaxed">Simpanan dengan sistem bagi hasil sesuai dengan keuntungan usaha
+            koperasi.</p>
+        </div>
+        <div
+          class="bg-gradient-to-br from-btmBlue/5 to-btmGray rounded-2xl shadow-lg p-8 hover:shadow-xl transition duration-300 border border-btmBlue/10 group">
+          <div
+            class="w-14 h-14 bg-btmBlue rounded-full flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition duration-300">
+            <!-- Mosque icon for Jumroh -->
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 3c2.21 0 4 1.79 4 4v3H8V7c0-2.21 1.79-4 4-4z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13v6h14v-6" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-btmBlue mb-3">Tabungan Jumroh</h3>
+          <p class="text-gray-700 leading-relaxed">Persiapkan perjalanan ibadah Haji dan Umroh dengan simpanan syariah
+            yang aman dan terencana.</p>
+        </div>
+        <div
+          class="bg-gradient-to-br from-btmBlue/5 to-btmGray rounded-2xl shadow-lg p-8 hover:shadow-xl transition duration-300 border border-btmBlue/10 group">
+          <div
+            class="w-14 h-14 bg-btmBlue rounded-full flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition duration-300">
+            <!-- Calendar icon for Tawida -->
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 2v4M8 2v4M3 10h18" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-btmBlue mb-3">Tabungan Tawida</h3>
+          <p class="text-gray-700 leading-relaxed">Simpanan dengan jangka waktu 24 bulan dengan jumlah setoran tetap
+            yang sudah ditentukan, dan akan mendapat wisata gratis di akhir periode.</p>
+        </div>
+        <div
+          class="bg-gradient-to-br from-btmBlue/5 to-btmGray rounded-2xl shadow-lg p-8 hover:shadow-xl transition duration-300 border border-btmBlue/10 group">
+          <div
+            class="w-14 h-14 bg-btmBlue rounded-full flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition duration-300">
+            <!-- Heart icon for Tasyqura' -->
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4.318 6.318a4.5 4.5 0 006.364 6.364L12 7.636l1.318 1.318a4.5 4.5 0 016.364-6.364" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-btmBlue mb-3">Tabungan Tasyqura'</h3>
+          <p class="text-gray-700 leading-relaxed">Tabungan khusus untuk persiapan berqurban maupun aqiqah yang dikelola
+            secara
+            syariah.</p>
+        </div>
+        <div
+          class="bg-gradient-to-br from-btmBlue/5 to-btmGray rounded-2xl shadow-lg p-8 hover:shadow-xl transition duration-300 border border-btmBlue/10 group">
+          <div
+            class="w-14 h-14 bg-btmBlue rounded-full flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition duration-300">
+            <!-- Clock icon for Berjangka -->
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7v5l3 2" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-btmBlue mb-3">Simpanan Berjangka</h3>
+          <p class="text-gray-700 leading-relaxed">Investasi dalam jangka waktu tertentu yang dikelola BTM berdasarkan
+            akad mudharabah muthlaqah.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pembiayaan Section -->
+  <section id="pembiayaan" class="section-padding bg-btmGray">
+    <div class="max-width text-center">
+      <h2 class="text-4xl font-bold text-btmBlue mb-16">Produk Pembiayaan</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Pembiayaan Konsumtif -->
+        <div
+          class="bg-white rounded-2xl shadow-lg p-8 hover:-translate-y-2 transition duration-300 border border-btmBlue/10 group">
+          <div
+            class="w-16 h-16 bg-btmBlue rounded-full flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition duration-300">
+            <!-- Konsumtif icon (shopping/cart) -->
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4" />
+              <circle cx="9" cy="20" r="1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+              <circle cx="20" cy="20" r="1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-btmBlue mb-4">Pembiayaan Konsumtif</h3>
+          <p class="text-gray-700 leading-relaxed">Pembiayaan untuk kebutuhan konsumsi pribadi seperti kendaraan,
+            gadget, renovasi rumah, dan kebutuhan keluarga.</p>
+          <p class="text-sm text-gray-600 mt-4">Akad yang digunakan:</p>
+          <ul class="text-gray-700 list-disc list-inside mt-2 text-sm">
+            <li>• Murabahah (jual-beli dengan margin yang disepakati)</li>
+            <li>• Ijarah (sewa) untuk produk tertentu bila diperlukan</li>
+          </ul>
+        </div>
+
+        <!-- Pembiayaan Produktif -->
+        <div
+          class="bg-white rounded-2xl shadow-lg p-8 hover:-translate-y-2 transition duration-300 border border-btmBlue/10 group">
+          <div
+            class="w-16 h-16 bg-btmBlue rounded-full flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition duration-300">
+            <!-- Produktif icon (briefcase/growth) -->
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3" />
+              <rect x="3" y="7" width="18" height="14" rx="2" ry="2" stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-btmBlue mb-4">Pembiayaan Produktif</h3>
+          <p class="text-gray-700 leading-relaxed">Diberikan untuk usaha mikro, kecil, dan menengah yang bertujuan
+            mengembangkan usaha atau modal kerja.</p>
+          <p class="text-sm text-gray-600 mt-4">Akad yang digunakan:</p>
+          <ul class="text-gray-700 list-disc list-inside mt-2 text-sm">
+            <li>• Mudharabah (bagi hasil)</li>
+            <li>• Musyarakah (kemitraan/modal bersama)</li>
+            <li>• Murabahah (jual-beli dengan margin yang disepakati)</li>
+            <li>• Ijarah untuk penyewaan aset jika relevan</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="section-padding bg-white">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-4xl font-bold text-btmBlue mb-16 text-center">Pertanyaan Umum (FAQ)</h2>
+      <div class="space-y-6">
+        <!-- FAQ Item 1 -->
+        <div class="faq-item bg-btmGray/50 rounded-2xl overflow-hidden hover:bg-btmGray transition duration-300">
+          <div class="faq-question flex justify-between items-center p-6" onclick="toggleFAQ(1)">
+            <h3 class="font-semibold text-lg text-btmBlue">Apa itu BTM Pemalang?</h3>
+            <svg class="faq-icon w-6 h-6 text-btmBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+          <div class="faq-answer px-6 text-gray-700">
+            <p class="leading-relaxed pb-6">BTM Pemalang adalah Koperasi Syariah yang beroperasi di wilayah Pemalang,
+              menyediakan layanan keuangan syariah seperti simpanan dan pembiayaan dengan prinsip syariah
+              yang transparan dan amanah.</p>
+          </div>
+        </div>
+
+        <!-- FAQ Item 2 -->
+        <div class="faq-item bg-btmGray/50 rounded-2xl overflow-hidden hover:bg-btmGray transition duration-300">
+          <div class="faq-question flex justify-between items-center p-6" onclick="toggleFAQ(2)">
+            <h3 class="font-semibold text-lg text-btmBlue">Cara buka tabungan di BTM Pemalang?</h3>
+            <svg class="faq-icon w-6 h-6 text-btmBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+          <div class="faq-answer px-6 text-gray-700">
+            <p class="leading-relaxed pb-6">Datang kekantor terdekat dan siapkan berkas berupa Foto Copy kartu identitas
+              (KTP /
+              Kartu Pelajar) dan Kartu Keluarga, Sampaikan tujuan ke petugas kami untuk nantinya diarahkan pembuatan
+              tabungan.
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ Item 3 -->
+        <div class="faq-item bg-btmGray/50 rounded-2xl overflow-hidden hover:bg-btmGray transition duration-300">
+          <div class="faq-question flex justify-between items-center p-6" onclick="toggleFAQ(3)">
+            <h3 class="font-semibold text-lg text-btmBlue">Buka rekening dan pengajuan pembiayaan harus jadi anggota BTM
+              Pemalang?</h3>
+            <svg class="faq-icon w-6 h-6 text-btmBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+          <div class="faq-answer px-6 text-gray-700">
+            <p class="leading-relaxed pb-6">Tidak, kamu tidak wajib menjadi anggota untuk membuka rekening atau
+              mengajukan
+              pembiayaan. Namun, menjadi anggota memberikan keuntungan tambahan seperti akses ke layanan eksklusif dan
+              partisipasi dalam keputusan koperasi.</p>
+          </div>
+        </div>
+
+
+        <!-- FAQ Item 4 -->
+        <div class="faq-item bg-btmGray/50 rounded-2xl overflow-hidden hover:bg-btmGray transition duration-300">
+          <div class="faq-question flex justify-between items-center p-6" onclick="toggleFAQ(4)">
+            <h3 class="font-semibold text-lg text-btmBlue">Bagaimana cara menjadi anggota BTM Pemalang?</h3>
+            <svg class="faq-icon w-6 h-6 text-btmBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+          <div class="faq-answer px-6 text-gray-700">
+            <p class="leading-relaxed pb-6">Untuk menjadi anggota, Anda dapat mengunjungi kantor BTM Pemalang terdekat
+              dengan
+              membawa KTP, mengisi formulir pendaftaran, dan membayar simpanan pokok sesuai ketentuan yang berlaku.</p>
+          </div>
+        </div>
+
+        <!-- FAQ Item 5 -->
+        <div class="faq-item bg-btmGray/50 rounded-2xl overflow-hidden hover:bg-btmGray transition duration-300">
+          <div class="faq-question flex justify-between items-center p-6" onclick="toggleFAQ(5)">
+            <h3 class="font-semibold text-lg text-btmBlue">Apakah BTM Pemalang aman?</h3>
+            <svg class="faq-icon w-6 h-6 text-btmBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+          <div class="faq-answer px-6 text-gray-700">
+            <p class="leading-relaxed pb-6">Ya, BTM Pemalang aman karena telah terdaftar dan diawasi oleh Otoritas Jasa
+              Keuangan
+              (OJK)
+              sehingga operasionalnya sesuai dengan regulasi yang berlaku dan memberikan jaminan keamanan bagi nasabah.
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ Item 6 -->
+        <div class="faq-item bg-btmGray/50 rounded-2xl overflow-hidden hover:bg-btmGray transition duration-300">
+          <div class="faq-question flex justify-between items-center p-6" onclick="toggleFAQ(6)">
+            <h3 class="font-semibold text-lg text-btmBlue">Berapa lama proses pengajuan pembiayaan?</h3>
+            <svg class="faq-icon w-6 h-6 text-btmBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+          <div class="faq-answer px-6 text-gray-700">
+            <p class="leading-relaxed pb-6">Proses pengajuan pembiayaan umumnya membutuhkan waktu 3-7 hari kerja,
+              tergantung
+              kelengkapan dokumen dan jenis pembiayaan yang diajukan.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="section-padding bg-white">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="text-4xl font-bold text-btmBlue mb-16 text-center">Hubungi Kami</h2>
+      <div class="bg-gradient-to-br from-btmBlue/5 to-btmGray/30 rounded-2xl shadow-lg p-8 md:p-12">
+        <form class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
+              <input type="text" placeholder="Masukkan nama lengkap"
+                class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-btmBlue focus:border-btmBlue outline-none transition duration-300">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+              <input type="email" placeholder="Masukkan email"
+                class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-btmBlue focus:border-btmBlue outline-none transition duration-300">
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Pesan</label>
+            <textarea placeholder="Tulis pesan Anda di sini..."
+              class="w-full border border-gray-300 rounded-xl px-4 py-3 h-32 focus:ring-2 focus:ring-btmBlue focus:border-btmBlue outline-none transition duration-300 resize-none"></textarea>
+          </div>
+          <button type="submit"
+            class="w-full bg-btmBlue text-white font-semibold px-8 py-4 rounded-xl hover:bg-btmYellow hover:text-btmBlue transition duration-300 shadow-lg hover:shadow-xl">
+            Kirim Pesan
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Office -->
+  <section id="office" class="section-padding bg-btmGray">
+    <div class="max-width text-center">
+      <h2 class="text-4xl font-bold text-btmBlue mb-16">Kantor Kami</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div
+          class="bg-white rounded-2xl shadow-lg p-8 hover:-translate-y-2 transition duration-300 border border-btmBlue/10 group">
+          <div
+            class="w-12 h-12 bg-btmBlue rounded-full flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition duration-300">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+          </div>
+          <h4 class="font-bold text-lg text-btmBlue mb-2">Kantor Pusat</h4>
+          <p class="text-gray-600">Jl. Jensud Barat - Comal Pemalang</p>
+          <p class="text-sm text-btmBlue mt-2">(0285) 5750325</p>
+        </div>
+        <div
+          class="bg-white rounded-2xl shadow-lg p-8 hover:-translate-y-2 transition duration-300 border border-btmBlue/10 group">
+          <div
+            class="w-12 h-12 bg-btmBlue rounded-full flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition duration-300">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </div>
+          <h4 class="font-bold text-lg text-btmBlue mb-2">Cabang Ulujami</h4>
+          <p class="text-gray-600">Jl. Raya Ulujami No.30 B - Ulujami Pemalang</p>
+          <p class="text-sm text-btmBlue mt-2">(0285) 4473163</p>
+        </div>
+        <div
+          class="bg-white rounded-2xl shadow-lg p-8 hover:-translate-y-2 transition duration-300 border border-btmBlue/10 group">
+          <div
+            class="w-12 h-12 bg-btmBlue rounded-full flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition duration-300">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </div>
+          <h4 class="font-bold text-lg text-btmBlue mb-2">Cabang Comal</h4>
+          <p class="text-gray-600">Jl. Jend A. Yani No.32 - Comal Pemalang</p>
+          <p class="text-sm text-btmBlue mt-2">(0285) 577377</p>
+        </div>
+        <div
+          class="bg-white rounded-2xl shadow-lg p-8 hover:-translate-y-2 transition duration-300 border border-btmBlue/10 group">
+          <div
+            class="w-12 h-12 bg-btmBlue rounded-full flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition duration-300">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </div>
+          <h4 class="font-bold text-lg text-btmBlue mb-2">Cabang Petarukan</h4>
+          <p class="text-gray-600">Ruko Pasar lama Blok.B No.13 - Petarukan Pemalang</p>
+          <p class="text-sm text-btmBlue mt-2">(0284) 3291232</p>
+        </div>
+        <div
+          class="bg-white rounded-2xl shadow-lg p-8 hover:-translate-y-2 transition duration-300 border border-btmBlue/10 group">
+          <div
+            class="w-12 h-12 bg-btmBlue rounded-full flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition duration-300">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </div>
+          <h4 class="font-bold text-lg text-btmBlue mb-2">Cabang Taman</h4>
+          <p class="text-gray-600">Jl. Kol.Sugiono - Taman Pemalang</p>
+          <p class="text-sm text-btmBlue mt-2">082313999661</p>
+        </div>
+        <div
+          class="bg-white rounded-2xl shadow-lg p-8 hover:-translate-y-2 transition duration-300 border border-btmBlue/10 group">
+          <div
+            class="w-12 h-12 bg-btmBlue rounded-full flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition duration-300">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </div>
+          <h4 class="font-bold text-lg text-btmBlue mb-2">Cabang Randudongkal</h4>
+          <p class="text-gray-600">Jl. Budi Utomo No404 - Randudongkal Pemalang</p>
+          <p class="text-sm text-btmBlue mt-2">(0284) 584348</p>
+        </div>
+        <div
+          class="bg-white rounded-2xl shadow-lg p-8 hover:-translate-y-2 transition duration-300 border border-btmBlue/10 group">
+          <div
+            class="w-12 h-12 bg-btmBlue rounded-full flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition duration-300">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </div>
+          <h4 class="font-bold text-lg text-btmBlue mb-2">Cabang Moga</h4>
+          <p class="text-gray-600">Jl. Raya Moga Pulosari Km.2 - Moga Pemalang</p>
+          <p class="text-sm text-btmBlue mt-2">(0284) 3287838</p>
+        </div>
+        <div
+          class="bg-white rounded-2xl shadow-lg p-8 hover:-translate-y-2 transition duration-300 border border-btmBlue/10 group">
+          <div
+            class="w-12 h-12 bg-btmBlue rounded-full flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition duration-300">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </div>
+          <h4 class="font-bold text-lg text-btmBlue mb-2">Cabang Belik</h4>
+          <p class="text-gray-600">Jl. Kalpataru Timur No.43 - Belik Pemalang</p>
+          <p class="text-sm text-btmBlue mt-2">(0284) 3287263</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-btmBlue text-white">
+    <div class="max-width section-padding">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="md:col-span-2">
+          <div class="flex items-center space-x-3 mb-6">
+            <img src="./src/images/logo-btm.png" alt="BTM Logo" class="h-12 w-12">
+            <h2 class="text-2xl font-bold">BTM PEMALANG</h2>
+          </div>
+          <p class="text-btmGray/80 leading-relaxed mb-6">
+            Koperasi Syariah BTM Pemalang berkomitmen memberikan layanan keuangan syariah yang transparan, amanah, dan
+            menguntungkan bagi seluruh anggota.
+          </p>
+          <div class="flex space-x-4">
+            <a href="https://www.instagram.com/btmpemalang/" target="_blank" rel="noopener noreferrer"
+              class="bg-white/10 p-3 rounded-full hover:bg-btmYellow hover:text-btmBlue transition duration-300"
+              aria-label="Instagram">
+              <!-- Instagram icon -->
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.5" y2="6.5"></line>
+              </svg>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61582312924520" target="_blank" rel="noopener noreferrer"
+              class="bg-white/10 p-3 rounded-full hover:bg-btmYellow hover:text-btmBlue transition duration-300"
+              aria-label="Facebook">
+              <!-- Facebook icon -->
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M22 12.07C22 6.48 17.52 2 11.93 2S2 6.48 2 12.07C2 17.01 5.66 21.13 10.44 22v-7.03H8.08v-2.9h2.36V9.41c0-2.33 1.39-3.61 3.52-3.61 1.02 0 2.09.18 2.09.18v2.3h-1.18c-1.16 0-1.52.72-1.52 1.46v1.75h2.58l-.41 2.9h-2.17V22C18.34 21.13 22 17.01 22 12.07z" />
+              </svg>
+            </a>
+            <a href="https://wa.me/6288971714363" target="_blank" rel="noopener noreferrer"
+              class="bg-white/10 p-3 rounded-full hover:bg-btmYellow hover:text-btmBlue transition duration-300"
+              aria-label="WhatsApp">
+              <!-- WhatsApp brand icon -->
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893c0-3.176-1.24-6.165-3.495-8.411" />
+              </svg>
+            </a>
+            <a href="https://www.youtube.com/@BTMPemalang_Official" target="_blank" rel="noopener noreferrer"
+              class="bg-white/10 p-3 rounded-full hover:bg-btmYellow hover:text-btmBlue transition duration-300"
+              aria-label="YouTube">
+              <!-- YouTube icon -->
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M23.5 6.2a2.8 2.8 0 00-1.97-1.98C19.7 3.5 12 3.5 12 3.5s-7.7 0-9.53.72A2.8 2.8 0 000 6.2C0 8.06 0 12 0 12s0 3.94.47 5.8a2.8 2.8 0 001.97 1.98C4.3 21 12 21 12 21s7.7 0 9.53-.72a2.8 2.8 0 001.97-1.98C24 15.94 24 12 24 12s0-3.94-.5-5.8zM9.75 15.02V8.98L15.5 12l-5.75 3.02z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-lg mb-6">Tautan Cepat</h3>
+          <ul class="space-y-3">
+            <li><a href="#about" class="text-btmGray/80 hover:text-btmYellow transition duration-300">Tentang Kami</a>
+            </li>
+            <li><a href="#services" class="text-btmGray/80 hover:text-btmYellow transition duration-300">Layanan</a>
+            </li>
+            <li><a href="#simpanan" class="text-btmGray/80 hover:text-btmYellow transition duration-300">Simpanan</a>
+            </li>
+            <li><a href="#pembiayaan"
+                class="text-btmGray/80 hover:text-btmYellow transition duration-300">Pembiayaan</a></li>
+            <li><a href="#faq" class="text-btmGray/80 hover:text-btmYellow transition duration-300">FAQ</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-lg mb-6">Kontak</h3>
+          <div class="space-y-3 text-btmGray/80">
+            <p class="flex items-center space-x-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+              <span>(0285) 5750325</span>
+            </p>
+            <p class="flex items-center space-x-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              <span>btmpemalang.pusat@yahoo.com</span>
+            </p>
+            <p class="flex items-center space-x-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <span>Jl. Jansud Barat, Pemalang</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-btmBlue/30 mt-12 pt-8 text-center">
+        <p class="text-btmGray/60">
+          &copy; 2025 BTM Pemalang. All rights reserved. | Terdaftar dan Diawasi oleh OJK
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Sticky info bar - smooth animation
+    const infoBar = document.getElementById('info-bar');
+    let lastScroll = 0;
+
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.scrollY;
+
+      if (currentScroll > lastScroll && currentScroll > 80) {
+        infoBar.classList.add('hide'); // Scroll ke bawah → sembunyikan
+      } else if (currentScroll < lastScroll) {
+        infoBar.classList.remove('hide'); // Scroll ke atas → tampilkan lagi
+      }
+
+      lastScroll = currentScroll;
+    });
+
+    // Navbar animasi
+    function navbarHandler() {
+      return {
+        open: false,
+        active: '#about',
+        menu: [
+          { label: 'Tentang', href: '#about' },
+          { label: 'Layanan', href: '#services' },
+          { label: 'Simpanan', href: '#simpanan' },
+          { label: 'Pembiayaan', href: '#pembiayaan' },
+          { label: 'FAQ', href: '#faq' },
+          { label: 'Kontak', href: '#contact' },
+          { label: 'Kantor', href: '#office' }
+        ],
+        init() {
+          window.addEventListener('scroll', () => {
+            let fromTop = window.scrollY + 80;
+            this.menu.forEach(link => {
+              const section = document.querySelector(link.href);
+              if (
+                section &&
+                section.offsetTop <= fromTop &&
+                section.offsetTop + section.offsetHeight > fromTop
+              ) {
+                this.active = link.href;
+              }
+            });
+          });
+        }
+      };
+    };
+
+    // Fungsi untuk toggle FAQ
+    function toggleFAQ(id) {
+      const answer = document.querySelector(`.faq-item:nth-child(${id}) .faq-answer`);
+      const icon = document.querySelector(`.faq-item:nth-child(${id}) .faq-icon`);
+
+      answer.classList.toggle('open');
+      icon.classList.toggle('open');
+    }
+  </script>
+
+  <!-- Floating download brochure button -->
+  <a href="src/brosure.pdf" download
+    class="fixed bottom-6 right-6 z-50 inline-flex items-center gap-3 bg-btmBlue text-white px-4 py-3 rounded-full shadow-lg hover:bg-btmYellow hover:text-btmBlue transition-colors duration-300"
+    aria-label="Download Brosur"
+    style="position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;background:#0b5dd7;color:#fff;padding:0.6rem 1rem;border-radius:9999px;box-shadow:0 10px 20px rgba(2,6,23,0.2);">
+    <!-- Filled Download SVG (fallback visible without Tailwind) -->
+    <svg class="w-5 h-5" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path
+        d="M12 3C11.4477 3 11 3.44772 11 4V13.5858L8.70711 11.2929C8.31658 10.9024 7.68342 10.9024 7.29289 11.2929C6.90237 11.6834 6.90237 12.3166 7.29289 12.7071L11.2929 16.7071C11.6834 17.0976 12.3166 17.0976 12.7071 16.7071L16.7071 12.7071C17.0976 12.3166 17.0976 11.6834 16.7071 11.2929C16.3166 10.9024 15.6834 10.9024 15.2929 11.2929L13 13.5858V4C13 3.44772 12.5523 3 12 3Z" />
+      <path
+        d="M5 20C4.44772 20 4 19.5523 4 19C4 18.4477 4.44772 18 5 18H19C19.5523 18 20 18.4477 20 19C20 19.5523 19.5523 20 19 20H5Z" />
+    </svg>
+    <span class="ml-2" style="color:inherit;font-weight:600;">Download Brosur</span>
+  </a>
+</body>
+
+</html>
